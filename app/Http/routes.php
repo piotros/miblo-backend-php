@@ -57,6 +57,13 @@ Route::group(['prefix' => 'api'], function () {
         $addedEntry = [];
         return $addedEntry;
     });
+
+    Route::get('users/{nickname}', function ($nickname) {
+        return [
+            'nickname' => $nickname,
+            'name' => 'Name'
+        ];
+    });
 });
 
 
