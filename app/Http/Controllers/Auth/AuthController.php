@@ -7,6 +7,7 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Auth;
 use Socialite;
 
 class AuthController extends Controller
@@ -78,8 +79,38 @@ class AuthController extends Controller
 
     public function handleProviderCallback()
     {
-        $user = Socialite::driver('facebook')->user();
+        try {
+            $user = Socialite::driver('facebook')->user();
+        } catch (Exception $e) {
+            return redirect('auth/facebook');
+        }
 
-        // $user->token;
+        $authUser = $this->findOrCreateUser($user);
+
+        Auth::login($authUser, true);
+
+        echo('<img src="' . Auth::user()->avatar . '">');
+    }
+
+    /**
+     * Return user if exists; create and return if doesn't
+     *
+     * @param $facebookUser
+     * @return User
+     */
+    private function findOrCreateUser($facebookUser)
+    {
+        $authUser = User::where('facebook_id', $facebookUser->id)->first();
+
+        if ($authUser) {
+            return $authUser;
+        }
+
+        return User::create([
+            'name' => $facebookUser->name,
+            'email' => $facebookUser->email,
+            'facebook_id' => $facebookUser->id,
+            'avatar' => $facebookUser->avatar
+        ]);
     }
 }
