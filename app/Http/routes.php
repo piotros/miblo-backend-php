@@ -33,25 +33,7 @@ Route::group(['middleware' => ['web']], function () {
 
 Route::group(['prefix' => 'api'], function () {
     Route::get('entries', function () {
-        return [[
-            'aaa' => 'aaa',
-            'bbb' => 'aaa',
-            'content' => 'lorem',
-            'authorNickname' => 'testnickname',
-            'authorName' => 'Big Ben',
-            'likes' => 3,
-            'comments' => 5,
-            'shares' => 4
-        ], [
-            'aaa' => 'aaa',
-            'bbb' => 'aaa',
-            'content' => 'lorem',
-            'authorNickname' => 'testnickname',
-            'authorName' => 'Big Ben',
-            'likes' => 3,
-            'comments' => 5,
-            'shares' => 4
-        ]];
+        return App\Entry::all();
     });
 
     Route::post('entries', function () {
