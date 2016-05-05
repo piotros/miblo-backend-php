@@ -32,14 +32,7 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 Route::group(['prefix' => 'api'], function () {
-    Route::get('entries', function () {
-        return App\Entry::all();
-    });
-
-    Route::post('entries', function () {
-        $addedEntry = [];
-        return $addedEntry;
-    });
+    Route::resource('entries', 'EntryController');
 
     Route::get('users/{nickname}', function ($nickname) {
         return [
@@ -48,5 +41,3 @@ Route::group(['prefix' => 'api'], function () {
         ];
     });
 });
-
-
