@@ -89,7 +89,7 @@ class AuthController extends Controller
 
         Auth::login($authUser, true);
 
-        echo('<img src="' . Auth::user()->avatar . '">');
+        return redirect('#');
     }
 
     /**
