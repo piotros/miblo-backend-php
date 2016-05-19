@@ -8,6 +8,10 @@ class CurrentUserController extends Controller
 {
     public function getCurrentUser()
     {
-        return Auth::user();
+        if (Auth::check()) {
+            return Auth::user();
+        } else {
+            abort(401);
+        }
     }
 }
