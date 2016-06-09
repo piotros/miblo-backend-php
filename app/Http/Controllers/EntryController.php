@@ -8,6 +8,8 @@ use App\Http\Requests;
 
 use App\Entry;
 
+use Auth;
+
 class EntryController extends Controller
 {
     /**
@@ -23,12 +25,15 @@ class EntryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $entry = new Entry($request->all());
+//        $entryAuthor = Auth::user();
+//        var_dump($entryAuthor);
+        $entry['authorNickname'] = 'testuser';
         $entry->save();
 
         return $entry;
@@ -37,7 +42,7 @@ class EntryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -48,8 +53,8 @@ class EntryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -60,7 +65,7 @@ class EntryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

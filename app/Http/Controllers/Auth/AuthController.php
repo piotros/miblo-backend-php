@@ -45,7 +45,7 @@ class AuthController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -60,7 +60,7 @@ class AuthController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return User
      */
     protected function create(array $data)
@@ -107,7 +107,10 @@ class AuthController extends Controller
         }
 
         return User::create([
-            'name' => $facebookUser->name,
+            'first_name' => $facebookUser->user['first_name'],
+            'last_name' => $facebookUser->user['last_name'],
+            'gender' => $facebookUser->user['gender'],
+            'nickname' => 'testuser',
             'email' => $facebookUser->email,
             'facebook_id' => $facebookUser->id,
             'avatar' => $facebookUser->avatar
